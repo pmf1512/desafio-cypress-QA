@@ -9,7 +9,7 @@
 ## 📌 Estrutura do Projeto
 - **`pageObjects`**: Encapsula interações com a UI.
 - **`commands.ts`**: Contém comandos customizados.
-- **`integration/tests`**: Contém os casos de teste.
+- **`e2e/...`**: Contém os casos de teste separados em pastas.
 
 ## 📌 Como Rodar os Testes
 1. Clone o repositório.
@@ -22,6 +22,7 @@ O projeto roda testes automaticamente via GitHub Actions.
 ## Testes Realizados
 
 1. Testes de Login
+
 1.1 Login com Sucesso
 Objetivo: Verificar se o usuário consegue fazer login com credenciais válidas.
 Passos:
