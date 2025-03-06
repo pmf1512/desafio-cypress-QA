@@ -1,0 +1,12 @@
+{
+    "name": "cypress-automation",
+    "version": "1.0.0",
+    "scripts": {
+        "test": "cypress run"
+    },
+    "devDependencies": {
+        "cypress": "^10.0.0",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.8.2"
+    }
+}
