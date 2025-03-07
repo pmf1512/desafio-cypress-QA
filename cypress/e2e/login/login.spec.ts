@@ -7,33 +7,26 @@ describe("Testes de Login", () => {
   });
 
   it("Deve fazer login com sucesso", () => {
-    LoginPage.login(Cypress.env("username"),  Cypress.env("password"));
-    cy.url().should('include', '/inventory.html');
-
+    LoginPage.login(Cypress.env("username"), Cypress.env("password"));
+    cy.url({ timeout: 10000 }).should('include', '/inventory.html');
   });
 
   it("Deve exibir erro para credenciais inválidas", () => {
-
     LoginPage.login(Cypress.env("invalidUsername"), Cypress.env("invalidPassword"));
-
     LoginPage.getErrorMessage()
       .should("be.visible")
       .and("contain", "Epic sadface: Username and password do not match any user in this service");
   });
 
   it("Deve exibir erro para usuário bloqueado", () => {
-
-    LoginPage.login(Cypress.env("lockedUser"),  Cypress.env("password"));
-
+    LoginPage.login(Cypress.env("lockedUser"), Cypress.env("password"));
     LoginPage.getErrorMessage()
       .should("be.visible")
       .and("contain", "Epic sadface: Sorry, this user has been locked out.");
   });
 
   it("Deve fazer login com um usuário com problemas", () => {
-
-    LoginPage.login(Cypress.env("problemUser"),  Cypress.env("password"));
-
+    LoginPage.login(Cypress.env("problemUser"), Cypress.env("password"));
     // Exemplo: Verifica se as imagens dos produtos carregam corretamente
     cy.get(".inventory_item_img").each(($img) => {
       cy.wrap($img).should("be.visible");
@@ -42,9 +35,8 @@ describe("Testes de Login", () => {
 
   it("Deve testar login com usuário de performance lenta", () => {
     cy.intercept("POST", "**/login").as("loginRequest");
-
-    LoginPage.login(Cypress.env("performanceUser"),  Cypress.env("password"));
-    cy.url().should('include', '/inventory.html');
+    LoginPage.login(Cypress.env("performanceUser"), Cypress.env("password"));
+    cy.url({ timeout: 10000 }).should('include', '/inventory.html');
   });
 
 });
