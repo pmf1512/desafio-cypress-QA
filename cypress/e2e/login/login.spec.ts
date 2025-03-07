@@ -8,6 +8,8 @@ describe("Testes de Login", () => {
 
   it("Deve fazer login com sucesso", () => {
     LoginPage.login(Cypress.env("username"),  Cypress.env("password"));
+    cy.url().should('include', '/inventory.html');
+
   });
 
   it("Deve exibir erro para credenciais inválidas", () => {
@@ -28,7 +30,7 @@ describe("Testes de Login", () => {
       .and("contain", "Epic sadface: Sorry, this user has been locked out.");
   });
 
-  it("Deve fazer login com um usuário problemático", () => {
+  it("Deve fazer login com um usuário com problemas", () => {
 
     LoginPage.login(Cypress.env("problemUser"),  Cypress.env("password"));
 
@@ -42,8 +44,6 @@ describe("Testes de Login", () => {
     cy.intercept("POST", "**/login").as("loginRequest");
 
     LoginPage.login(Cypress.env("performanceUser"),  Cypress.env("password"));
-
-    // Verifica se a URL foi alterada corretamente após login
     cy.url().should('include', '/inventory.html');
   });
 

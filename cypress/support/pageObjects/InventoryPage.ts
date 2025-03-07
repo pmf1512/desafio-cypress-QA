@@ -7,7 +7,6 @@ class InventoryPage {
       .click();
   }
 
-
   static goToCart() {
     cy.get(".shopping_cart_link").click();
     cy.url().should("include", "/cart.html");

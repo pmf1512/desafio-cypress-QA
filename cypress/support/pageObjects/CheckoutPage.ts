@@ -27,7 +27,6 @@ class CheckoutPage {
 
 
     static confirmCheckout() {
-        // Se os campos estiverem preenchidos, o checkout pode continuar
         cy.get('.btn_action', { timeout: 10000 }).should('be.visible').click();
         cy.url().should("include", "/checkout-complete.html")
     }

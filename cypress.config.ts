@@ -1,13 +1,11 @@
 import { defineConfig } from 'cypress';
 import * as dotenv from 'dotenv';
 
-// Carrega variáveis do arquivo .env
 dotenv.config();
 
 export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
-      // Injeta as variáveis do .env no Cypress
       config.env = {
         baseUrl: process.env.CYPRESS_BASE_URL,
         username: process.env.CYPRESS_USERNAME,
@@ -17,6 +15,9 @@ export default defineConfig({
         lockedUser: process.env.CYPRESS_LOCKED_USER,
         problemUser: process.env.CYPRESS_PROBLEM_USER,
         performanceUser: process.env.CYPRESS_PERFORMANCE_USER,
+        firstName: process.env.CYPRESS_FIRST_NAME,
+        lastName : process.env.CYPRESS_LAST_NAME,
+        zipCode : process.env.CYPRESS_ZIP_CODE
       };
       return config;
     },
