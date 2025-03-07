@@ -13,12 +13,24 @@ class LoginPage {
 
     cy.intercept("POST", "**/login").as("loginRequest");
 
-    cy.get(this.usernameField).type(username);
-    cy.get(this.passwordField)
-    .should('not.be.disabled') 
-    .type(password); 
-  cy.get(this.loginButton).click();
+    // Verifica se o username não é undefined ou vazio e então preenche o campo
+    if (username) {
+      cy.get(this.usernameField).clear().type(username);
+    } else {
+      cy.get(this.usernameField).clear(); // Caso esteja vazio, limpa o campo
+    }
 
+    // Verifica se o password não é undefined ou vazio e então preenche o campo
+    if (password) {
+      cy.get(this.passwordField)
+        .should('not.be.disabled')
+        .clear()
+        .type(password);
+    } else {
+      cy.get(this.passwordField).clear(); // Caso esteja vazio, limpa o campo
+    }
+
+    cy.get(this.loginButton).click();
   }
 
   getErrorMessage() {
