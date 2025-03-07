@@ -5,30 +5,29 @@ on: [push, pull_request]
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout código
-        uses: actions/checkout@v4
+      - name: Checkout do código
+        uses: actions/checkout@v3
 
       - name: Configurar Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "npm"
+          cache: 'npm'
 
-      - name: Restaurar cache do Cypress
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Cache do Cypress
         uses: actions/cache@v3
         with:
           path: ~/.cache/Cypress
-          key: cypress-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          key: cypress-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
           restore-keys: |
             cypress-${{ runner.os }}-
-
-      - name: Instalar dependências
-        run: npm ci
 
       - name: Instalar Cypress
         run: npx cypress install
 
-      - name: Executar testes com Cypress
+      - name: Executar testes Cypress
         run: npx cypress run
