@@ -9,7 +9,7 @@
 ## 📌 Estrutura do Projeto
 - **`pageObjects`**: Encapsula interações com a UI.
 - **`commands.ts`**: Contém comandos customizados.
-- **`e2e/...`**: Contém os casos de teste separados em pastas.
+- **`tests/...`**: Contém os casos de teste separados em pastas.
 
 ## 📌 Como Rodar os Testes
 1. Clone o repositório.
