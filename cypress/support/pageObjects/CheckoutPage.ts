@@ -1,9 +1,11 @@
 class CheckoutPage {
+    // Inicia o processo de checkout
     static startCheckout() {
         cy.get("[data-test='checkout']").click();
     }
 
-    static fillCheckoutForm(firstName: string = '', lastName: string = '', postalCode: string = '') {
+    // Preenche o formulário de checkout com valores passados ou com os valores de fallback
+    static fillCheckoutForm(firstName = '', lastName = '', postalCode = '') {
         if (firstName) {
             cy.get('#first-name').type(firstName);
         } else {
@@ -25,24 +27,31 @@ class CheckoutPage {
         cy.get("[data-test='continue']").click();
     }
 
-
+    // Confirma o checkout e verifica se a URL é a esperada
     static confirmCheckout() {
-        cy.get('.btn_action', { timeout: 10000 }).should('be.visible').click();
-        cy.url().should("include", "/checkout-complete.html")
+        cy.get('.btn_action', { timeout: 10000 })
+            .should('be.visible')
+            .click();
+        
+        cy.url().should("include", "/checkout-complete.html");
     }
 
+    // Recupera a mensagem de sucesso após o checkout
     static getSuccessMessage() {
         return cy.get('.complete-header');
     }
 
+    // Recupera a mensagem de erro quando um campo obrigatório não é preenchido
     static getErrorMessage() {
         return cy.get("h3[data-test='error']");
     }
 
+    // Cancela o checkout e volta para a página do carrinho
     static cancelCheckout() {
-        cy.get('.cart_cancel_link', { timeout: 10000 }).should('be.visible').click();
+        cy.get('.cart_cancel_link', { timeout: 10000 })
+            .should('be.visible')
+            .click();
     }
-
 }
 
 export default CheckoutPage;

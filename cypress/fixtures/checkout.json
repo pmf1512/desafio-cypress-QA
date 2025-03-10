@@ -1,0 +1,17 @@
+
+{
+  
+  "checkout": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "zipCode": "12345"
+  },
+  "cart": [
+    "Sauce Labs Backpack",
+    "Sauce Labs Bike Light",
+    "Sauce Labs Bolt T-Shirt",
+    "Sauce Labs Fleece Jacket",
+    "Sauce Labs Onesie",
+    "Test.allTheThings() T-Shirt (Red)"
+  ]
+}
