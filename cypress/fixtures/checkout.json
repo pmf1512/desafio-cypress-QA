@@ -2,8 +2,8 @@
 {
   
   "checkout": {
-    "firstName": "John",
-    "lastName": "Doe",
+    "firstName": "Teste Nome",
+    "lastName": "Teste Sobrenome",
     "zipCode": "12345"
   },
   "cart": [
