@@ -29,5 +29,18 @@ jobs:
       - name: Instalar Cypress
         run: npx cypress install
 
+      # 🔹 Criar o arquivo .env com os secrets do GitHub
+      - name: Criar arquivo .env
+        run: |
+          echo "CYPRESS_BASE_URL=${{ secrets.CYPRESS_BASE_URL }}" >> .env
+          echo "CYPRESS_USERNAME=${{ secrets.CYPRESS_USERNAME }}" >> .env
+          echo "CYPRESS_PASSWORD=${{ secrets.CYPRESS_PASSWORD }}" >> .env
+          echo "CYPRESS_INVALID_USERNAME=${{ secrets.CYPRESS_INVALID_USERNAME }}" >> .env
+          echo "CYPRESS_INVALID_PASSWORD=${{ secrets.CYPRESS_INVALID_PASSWORD }}" >> .env
+          echo "CYPRESS_LOCKED_USER=${{ secrets.CYPRESS_LOCKED_USER }}" >> .env
+          echo "CYPRESS_PROBLEM_USER=${{ secrets.CYPRESS_PROBLEM_USER }}" >> .env
+          echo "CYPRESS_PERFORMANCE_USER=${{ secrets.CYPRESS_PERFORMANCE_USER }}" >> .env
+        shell: bash
+
       - name: Executar testes Cypress
         run: npx cypress run
