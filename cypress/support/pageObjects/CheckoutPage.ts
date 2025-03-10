@@ -4,7 +4,8 @@ class CheckoutPage {
         cy.get("[data-test='checkout']").click();
     }
 
-    // Preenche o formulário de checkout com valores passados ou com os valores de fallback
+    //Preenche o formulário de checkout com valores fornecidos ou limpa os campos caso não sejam passados.
+
     static fillCheckoutForm(firstName = '', lastName = '', postalCode = '') {
         if (firstName) {
             cy.get('#first-name').type(firstName);
@@ -23,7 +24,7 @@ class CheckoutPage {
         } else {
             cy.get('#postal-code').clear();
         }
-
+        // Confirma a submissão do formulário de checkout
         cy.get("[data-test='continue']").click();
     }
 
@@ -32,7 +33,7 @@ class CheckoutPage {
         cy.get('.btn_action', { timeout: 10000 })
             .should('be.visible')
             .click();
-        
+
         cy.url().should("include", "/checkout-complete.html");
     }
 

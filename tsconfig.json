@@ -1,14 +1,26 @@
 {
   "compilerOptions": {
+    // Define o diretório base para a resolução de módulos, neste caso, o diretório './src'.
     "baseUrl": "./src",
+
+    // Configura os caminhos para a resolução de módulos. 
+    // A chave "*" indica que qualquer módulo será resolvido primeiro em 'node_modules/*' e depois em 'src/*'.
     "paths": {
       "*": [
-        "node_modules/*",
-        "src/*"
+        "node_modules/*", // Resolvem módulos dentro do diretório 'node_modules'.
+        "src/*" // Caso não seja encontrado, tenta resolver a partir de 'src/'.
       ]
     },
+
+    // Habilita a interoperabilidade entre módulos CommonJS e ES6 (permite usar 'import' e 'export' com módulos CommonJS).
     "esModuleInterop": true,
+
+    // Define como o TypeScript resolve os módulos.
+    // 'node' é o modo de resolução de módulos mais compatível com o sistema de módulos do Node.js.
     "moduleResolution": "node",
+
+    // Define o alvo para a transpilação do TypeScript. 
+    // 'es6' especifica que o código gerado será compatível com ECMAScript 2015 (ES6).
     "target": "es6"
   }
 }
