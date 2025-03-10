@@ -1,22 +1,26 @@
 # Testes Automatizados - SwagLabs
 
 ## 📌 Tecnologias Utilizadas
+
 - Cypress
 - TypeScript
 - GitHub Actions
 - Page Object Model (POM)
 
 ## 📌 Estrutura do Projeto
+
 - **`pageObjects`**: Encapsula interações com a UI.
 - **`commands.ts`**: Contém comandos customizados.
 - **`tests/...`**: Contém os casos de teste separados em pastas.
 
 ## 📌 Como Rodar os Testes
+
 1. Clone o repositório.
 2. Instale as dependências: `npm install`
 3. Execute os testes: `npx cypress open`
 
 ## 📌 CI/CD
+
 O projeto roda testes automaticamente via GitHub Actions.
 
 ## Testes Realizados
@@ -158,7 +162,5 @@ Passos:
 Adicionar um item ao carrinho.
 Iniciar o checkout e cancelar o processo.
 Resultado Esperado: O usuário deve ser redirecionado de volta para a página do carrinho.
-
-
 
 >> Comando para gerar relatório pós teste: npx cypress run --reporter mochawesome

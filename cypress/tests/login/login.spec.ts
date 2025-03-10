@@ -49,4 +49,4 @@ describe("Testes de Login", () => {
     cy.url({ timeout: 10000 }).should('include', '/inventory.html');
   });
 
-});
+}); 
