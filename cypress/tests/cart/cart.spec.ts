@@ -1,5 +1,5 @@
 import LoginPage from "../../support/pageObjects/LoginPage";
-import InventoryPage from "../../support/pageObjects/InventoryPage";
+import CartPage from "../../support/pageObjects/CartPage";
 
 describe("Testes do Carrinho", () => {
   beforeEach(() => {
@@ -12,9 +12,9 @@ describe("Testes do Carrinho", () => {
     // Acessar os itens do carrinho do config.env
     cy.fixture("checkout").then((data) => {
       const cartItem = Cypress.env("cart")[0]; // Acessando o primeiro item do carrinho
-      InventoryPage.addToCart(cartItem); // Adicionando o primeiro produto do fixture
+      CartPage.addToCart(cartItem); // Adicionando o primeiro produto do fixture
     });
-    InventoryPage.goToCart();
+    CartPage.goToCart();
     cy.get(".cart_item").should("have.length", 1);
     cy.get(".cart_item .inventory_item_name").should("contain.text", "Sauce Labs Backpack");
   });
@@ -29,11 +29,11 @@ describe("Testes do Carrinho", () => {
         randomItems.forEach(($item) => {
           // Usando jQuery para encontrar o nome do item
           const itemName = Cypress.$($item).find(".inventory_item_name").text();
-          InventoryPage.addToCart(itemName); // Adiciona o item ao carrinho
+          CartPage.addToCart(itemName); // Adiciona o item ao carrinho
         });
       });
 
-    InventoryPage.goToCart();
+    CartPage.goToCart();
     cy.get(".cart_item").should("have.length", 2); // Verifica se dois itens foram adicionados
   });
 
@@ -42,10 +42,10 @@ describe("Testes do Carrinho", () => {
     cy.fixture("checkout").then((data) => {
       const products = Cypress.env("cart"); // Acessando os itens do carrinho
       products.forEach((product: string) => {
-        InventoryPage.addToCart(product); // Adicionando todos os itens do fixture
+        CartPage.addToCart(product); // Adicionando todos os itens do fixture
       });
     });
-    InventoryPage.goToCart();
+    CartPage.goToCart();
     cy.get(".cart_item").should("have.length", 6); // A quantidade de itens no carrinho deve ser 6
     cy.get(".cart_item .inventory_item_name").each(($cartItem, index) => {
       const productName = $cartItem.text();

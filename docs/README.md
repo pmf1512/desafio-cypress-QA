@@ -158,3 +158,6 @@ Passos:
 Adicionar um item ao carrinho.
 Iniciar o checkout e cancelar o processo.
 Resultado Esperado: O usuário deve ser redirecionado de volta para a página do carrinho.
+
+
+>> Comando para gerar relatório pós teste: npx cypress run --reporter mochawesome

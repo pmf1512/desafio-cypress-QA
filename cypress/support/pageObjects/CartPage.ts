@@ -1,4 +1,4 @@
-class InventoryPage {
+class CartPage {
   static addToCart(productName: string) {
     cy.contains(".inventory_item", productName).should("be.visible");
 
@@ -17,4 +17,4 @@ class InventoryPage {
   }
 }
 
-export default InventoryPage;
+export default CartPage;

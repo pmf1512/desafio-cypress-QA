@@ -14,7 +14,7 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       // Adiciona os dados do checkout no config.env
       config.env = {
-        baseUrl: process.env.CYPRESS_BASE_URL ,
+        baseUrl: process.env.CYPRESS_BASE_URL,
         username: process.env.CYPRESS_USERNAME,
         password: process.env.CYPRESS_PASSWORD,
         invalidUsername: process.env.CYPRESS_INVALID_USERNAME,
@@ -35,5 +35,14 @@ export default defineConfig({
     supportFile: 'cypress/support/e2e.ts',
     chromeWebSecurity: false,
     experimentalFetchPolyfill: true,
+    reporter: "mochawesome",
+    reporterOptions: {
+      reportDir: "cypress/reports",
+      overwrite: false,
+      html: true,
+      json: true,
+    },
+    "numTestsKeptInMemory": 0,
+    "video": false,
   },
 });

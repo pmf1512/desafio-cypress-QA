@@ -1,5 +1,5 @@
 import CheckoutPage from "../../support/pageObjects/CheckoutPage";
-import InventoryPage from "../../support/pageObjects/InventoryPage";
+import CartPage from "../../support/pageObjects/CartPage";
 import LoginPage from "../../support/pageObjects/LoginPage";
 
 describe("Testes de Checkout", () => {
@@ -13,12 +13,12 @@ describe("Testes de Checkout", () => {
         cy.fixture("checkout").then((data) => {
             // Adicionar todos os itens do fixture ao carrinho
             data.cart.forEach((item: string) => {
-                InventoryPage.addToCart(item);
+                CartPage.addToCart(item);
             });
         });
 
         // Vai para o carrinho e inicia o checkout
-        InventoryPage.goToCart();
+        CartPage.goToCart();
         CheckoutPage.startCheckout();
     });
 
