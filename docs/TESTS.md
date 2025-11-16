@@ -7,9 +7,8 @@ Verifica se o login na aplicação funciona corretamente para diferentes cenári
 
 ✅ Cenários de Teste:
 [✔] Login com credenciais válidas
+[✔] Tentativa de login com e-mail incorreto
 [✔] Tentativa de login com senha incorreta
-[✔] Tentativa de login com usuário inexistente
-[✔] Tentativa de login sem preencher os campos
 
 🔄 Passos de Execução:
 Acessar a página de login
@@ -27,39 +26,44 @@ Se o login for inválido, uma mensagem de erro apropriada deve ser exibida
 Valida se os produtos podem ser adicionados, removidos e se a listagem do carrinho está correta.
 
 ✅ Cenários de Teste:
-[✔] Adicionar um produto ao carrinho
-[✔] Adicionar vários produtos ao carrinho
-[✔] Remover um produto do carrinho
-[✔] Visualizar o resumo do carrinho antes da finalização da compra
+[✔] Adicionar um produto ao carrinho e realizar a compra
+[✔] Adicionar um produto ao carrinho e excluir
+[✔] Adicionar um item ao carrinho, excluir e desfazer a exclusão
 
 🔄 Passos de Execução:
 Acessar a página de produtos
 Adicionar produtos ao carrinho
 Acessar a página do carrinho
 Remover produtos (se aplicável)
+Desfazer a exclusão do item do carrinho (se aplicável)
 Verificar se a listagem e os valores estão corretos
 
 🎯 Resultado Esperado:
 O carrinho deve exibir corretamente os produtos adicionados e seus valores
-O botão de checkout deve estar habilitado se houver produtos no carrinho
 Se um produto for removido, ele não deve mais aparecer na lista
+Se um produto for removido, e a sua exclusão for desfeita, o item e seu valor deve ser exibido novamente no carrinho.
 
 🏁 3. Testes de Checkout
 
 📌 Descrição:
-Verifica se a finalização da compra ocorre corretamente e se os campos obrigatórios são validados.
+Verifica se os campos obrigatórios são validados, se um cupom é adicionado ou recusado corretamente e as mensagens dos formatos de pagamentos.
 
 ✅ Cenários de Teste:
-[✔] Finalização da compra com dados válidos
-[✔] Tentativa de checkout sem preencher os campos obrigatórios
-[✔] Exibição de mensagens de erro quando os campos não são preenchidos
+[✔] Validar campos obrigatórios do checkout
+[✔] Adicionar um cupom válido
+[✔] Adicionar cupom inválido
+[✔] Validar mensagens dos formatos de pagamentos
+
 
 🔄 Passos de Execução:
 Acessar a página de checkout
-Preencher os campos obrigatórios (First Name, Last Name, Zip Code)
-Clicar no botão de continuar
-Verificar se a compra foi finalizada corretamente
+Validar que ao salvar sem preencher os campos obrigatórios são disparadas as mensagens críticas de erros dos campos.
+Adicionar um cupom válido
+Adicionar um cupom inválido
+Verificar as mensagens de cada forma de pagamento disponível
 
 🎯 Resultado Esperado:
-Se os campos forem preenchidos corretamente, deve aparecer a mensagem "Thank you for your order!"
-Se houver campos vazios, deve aparecer uma mensagem de erro específica
+Se houver campos obrigatórios vazios, deve aparecer uma mensagem de erro específica de cada campo
+Ao inserir um cupom válido, ele é adicionado corretamente.
+Ao inserir um cupom inválido, ocorre erro e informa que o mesmo é inválido.
+Ao selecionar cada uma das formas de pagamentos disponíveis no sistema, exibe uma mensagem explicativa para cada uma delas.

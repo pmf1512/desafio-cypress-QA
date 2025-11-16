@@ -1,4 +1,4 @@
-import LoginPage from "../../support/pageObjects/LoginPage";
+import { loginElement }  from '../../support/locators/loginElement';
 
 describe("Testes de Login", () => {
   // Executado antes de cada teste
@@ -7,46 +7,33 @@ describe("Testes de Login", () => {
     cy.visit("/");
   });
 
-  it("Deve fazer login com sucesso", () => {
-    // Realiza o login com as credenciais do ambiente (definidas no .env)
-    LoginPage.login(Cypress.env("username"), Cypress.env("password"));
-    // Verifica se a URL contém '/inventory.html', indicando que o login foi bem-sucedido
-    cy.url({ timeout: 10000 }).should('include', '/inventory.html');
+  it("Deve fazer login e logout com sucesso", () => {
+    cy.get(loginElement.loginTopbarButton).should("be.visible").click();
+    cy.url().should('include', 'minha-conta/');
+    cy.get(loginElement.loginUsernameInput).should("be.visible").type(Cypress.env("username"));
+    cy.get(loginElement.loginPasswordInput).should("be.visible").type(Cypress.env("password"));
+    cy.get(loginElement.loginButton).should("be.visible").click();
+    cy.get(loginElement.topBar).should("contain", "Welcome pamelamaia_freitas !");
+    cy.contains("Logout").should("be.visible").click();
+    cy.get(loginElement.loginTopbarButton).should("be.visible");
   });
 
-  it("Deve exibir erro para credenciais inválidas", () => {
-    // Realiza o login com credenciais inválidas
-    LoginPage.login(Cypress.env("invalidUsername"), Cypress.env("invalidPassword"));
-    // Verifica se a mensagem de erro aparece corretamente
-    LoginPage.getErrorMessage()
-      .should("be.visible")
-      .and("contain", "Epic sadface: Username and password do not match any user in this service");
+  it("Deve exibir erro para e-mail inválido", () => {
+    cy.get(loginElement.loginTopbarButton).should("be.visible").click();
+    cy.url().should('include', 'minha-conta/');
+    cy.get(loginElement.loginUsernameInput).should("be.visible").type(Cypress.env("invalidUsername"));
+    cy.get(loginElement.loginPasswordInput).should("be.visible").type(Cypress.env("invalidPassword"));
+    cy.get(loginElement.loginButton).should("be.visible").click();
+    cy.get(loginElement.invalidLoginMessage).should("contain", "Endereço de e-mail desconhecido. Verifique novamente ou tente seu nome de usuário.");
   });
 
-  it("Deve exibir erro para usuário bloqueado", () => {
-    // Realiza o login com um usuário bloqueado
-    LoginPage.login(Cypress.env("lockedUser"), Cypress.env("password"));
-    // Verifica se a mensagem de erro aparece indicando que o usuário foi bloqueado
-    LoginPage.getErrorMessage()
-      .should("be.visible")
-      .and("contain", "Epic sadface: Sorry, this user has been locked out.");
-  });
-
-  it("Deve fazer login com um usuário com problemas", () => {
-    // Realiza o login com um usuário que pode ter problemas, como imagens de produtos
-    LoginPage.login(Cypress.env("problemUser"), Cypress.env("password"));
-    // Verifica se as imagens dos produtos estão visíveis, como parte do teste
-    cy.get(".inventory_item_img").each(($img) => {
-      cy.wrap($img).should("be.visible");
-    });
-  });
-
-  it("Deve testar login com usuário de performance lenta", () => {
-    // Intercepta a requisição de login para monitorar o tempo de resposta
-    cy.intercept("POST", "**/login").as("loginRequest");
-    LoginPage.login(Cypress.env("performanceUser"), Cypress.env("password"));
-    // Verifica se a URL inclui '/inventory.html' após a tentativa de login
-    cy.url({ timeout: 10000 }).should('include', '/inventory.html');
+    it("Deve exibir erro para senha inválida", () => {
+    cy.get(loginElement.loginTopbarButton).should("be.visible").click();
+    cy.url().should('include', 'minha-conta/');
+    cy.get(loginElement.loginUsernameInput).should("be.visible").type(Cypress.env("username"));
+    cy.get(loginElement.loginPasswordInput).should("be.visible").type(Cypress.env("invalidPassword"));
+    cy.get(loginElement.loginButton).should("be.visible").click();
+    cy.get(loginElement.invalidLoginMessage).should("contain", "Erro: A senha fornecida para o e-mail pamelamaia_freitas@hotmail.com está incorreta. Perdeu a senha?");
   });
 
 }); 

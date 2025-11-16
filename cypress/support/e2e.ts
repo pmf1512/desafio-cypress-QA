@@ -18,3 +18,11 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+// Lida com exceções não capturadas para evitar que quebrem os testes
+Cypress.on('uncaught:exception', (err) => {
+  // Impede que esse erro quebre o teste
+  if (err.message.includes("appendChild") || err.message.includes("Unexpected token '<'")) {
+    return false;
+  }
+});

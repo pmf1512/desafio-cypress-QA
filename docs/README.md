@@ -4,12 +4,9 @@
 
 - Cypress
 - TypeScript
-- GitHub Actions
-- Page Object Model (POM)
 
 ## 📌 Estrutura do Projeto
 
-- **`pageObjects`**: Encapsula interações com a UI.
 - **`commands.ts`**: Contém comandos customizados.
 - **`tests/...`**: Contém os casos de teste separados em pastas.
 
@@ -18,10 +15,6 @@
 1. Clone o repositório.
 2. Instale as dependências: `npm install`
 3. Execute os testes: `npx cypress open`
-
-## 📌 CI/CD
-
-O projeto roda testes automaticamente via GitHub Actions.
 
 ## Testes Realizados
 
@@ -33,134 +26,111 @@ Objetivo: Verificar se o usuário consegue fazer login com credenciais válidas.
 
 Passos:
 Acessar a página de login.
-Preencher o campo de usuário com "standard_user".
-Preencher o campo de senha com "secret_sauce".
+Preencher o campo de usuário com "pamelamaia_freitas@hotmail.com".
+Preencher o campo de senha com "Pl@netaSol@r".
 Clicar no botão de login.
-Resultado Esperado: O usuário deve ser redirecionado para a página inicial do dashboard com sucesso.
+Resultado Esperado: O usuário deve ser redirecionado para a página da minha conta com sucesso.
 
-1.2 Erro de Credenciais Inválidas
+1.2 Erro de Login com E-mail Inválido
 
-Objetivo: Verificar se o sistema exibe uma mensagem de erro quando as credenciais são inválidas.
+Objetivo: Verificar se o sistema exibe uma mensagem de erro quando o login é feito com um e-mail inválido.
 
 Passos:
 Acessar a página de login.
-Preencher o campo de usuário com "wrong_user".
-Preencher o campo de senha com "wrong_password".
+Preencher o campo de usuário com "testeemailerro@ebac.com".
+Preencher o campo de senha com "123456".
 Clicar no botão de login.
-Resultado Esperado: A mensagem de erro "Epic sadface: Username and password do not match any user in this service" deve ser exibida.
+Resultado Esperado: A mensagem de erro "Endereço de e-mail desconhecido. Verifique novamente ou tente seu nome de usuário." deve ser exibida.
 
-1.3 Erro de Usuário Bloqueado
+1.3 Erro de Login com Senha Inválida
 
-Objetivo: Verificar se o sistema exibe uma mensagem de erro quando o usuário está bloqueado.
+Objetivo: Verificar se o sistema exibe uma mensagem de erro quando o login é feito com uma senha inválida.
 
 Passos:
 Acessar a página de login.
-Preencher o campo de usuário com "locked_out_user".
-Preencher o campo de senha com "secret_sauce".
+Preencher o campo de usuário com "pamelamaia_freitas@hotmail.com".
+Preencher o campo de senha com "123456".
 Clicar no botão de login.
-Resultado Esperado: A mensagem de erro "Epic sadface: Sorry, this user has been locked out." deve ser exibida.
-
-1.4 Erro de Usuário com Problemas de Performance
-
-Objetivo: Testar o comportamento do login quando o usuário tem características especiais (exemplo: problemas com carregamento de imagens).
-
-Passos:
-Acessar a página de login.
-Preencher o campo de usuário com "problem_user".
-Preencher o campo de senha com "secret_sauce".
-Clicar no botão de login.
-Verificar se as imagens dos produtos carregam corretamente.
-Resultado Esperado: As imagens dos produtos devem ser visíveis.
-
-1.5 Erro de Usuário com Performance Lenta
-
-Objetivo: Verificar se o sistema funciona com usuários que causam lentidão na resposta.
-
-Passos:
-Acessar a página de login.
-Preencher o campo de usuário com "performance_glitch_user".
-Preencher o campo de senha com "secret_sauce".
-Clicar no botão de login.
-Resultado Esperado: O login deve ser completado, mesmo com a lentidão da resposta.
+Resultado Esperado: A mensagem de erro "Erro: A senha fornecida para o e-mail pamelamaia_freitas@hotmail.com está incorreta. Perdeu a senha?" deve ser exibida.
 
 2. Testes de Carrinho
 
-2.1 Adicionar um item ao carrinho
+2.1 Adicionar um item ao carrinho e realizar a compra
 
-Objetivo: Verificar se o item é adicionado corretamente ao carrinho.
-
-Passos:
-Acessar a página de login e logar com credenciais válidas.
-Adicionar o item "Sauce Labs Backpack" ao carrinho.
-Acessar o carrinho de compras.
-Resultado Esperado: O carrinho deve conter exatamente 1 item, que é o "Sauce Labs Backpack".
-
-2.2 Adicionar dois itens ao carrinho
-
-Objetivo: Verificar se dois itens são adicionados corretamente ao carrinho.
+Objetivo: Verificar se o item é adicionado corretamente ao carrinho e a compra é efetuada com sucesso.
 
 Passos:
 Acessar a página de login e logar com credenciais válidas.
-Adicionar os itens "Sauce Labs Backpack" e "Sauce Labs Bike Light" ao carrinho.
+Adicionar o item "Aero Daily Fitness Tee" ao carrinho.
 Acessar o carrinho de compras.
-Resultado Esperado: O carrinho deve conter exatamente 2 itens, "Sauce Labs Backpack" e "Sauce Labs Bike Light".
+Realizar compra do item adicionado ao carrinho.
+Resultado Esperado: A compra deve ser efetuada com sucesso.
 
-2.3 Adicionar todos os itens ao carrinho
+2.2 Adicionar um item ao carrinho e excluir
 
-Objetivo: Verificar se todos os itens disponíveis são adicionados corretamente ao carrinho.
+Objetivo: Verificar se a exclusão de um item adicionado ao carrinho é efetuada com sucesso.
 
 Passos:
 Acessar a página de login e logar com credenciais válidas.
-Adicionar todos os itens da lista de produtos ao carrinho.
+Adicionar o item "Aero Daily Fitness Tee" ao carrinho.
 Acessar o carrinho de compras.
-Resultado Esperado: O carrinho deve conter exatamente 6 itens, todos os produtos da página de inventário.
+Realizar exclusão do item adicionado ao carrinho.
+Resultado Esperado: O carrinho deve ficar vazio e o item ser excluído com sucesso.
+
+2.3 Adicionar um item ao carrinho, excluir e desfazer a exclusão
+
+Objetivo: Verificar se após um item ter sido excluído do carrinho, ao desfazer, a ação de exclusão é desfeita com sucesso.
+
+Passos:
+Acessar a página de login e logar com credenciais válidas.
+Adicionar o item "Aero Daily Fitness Tee" ao carrinho.
+Acessar o carrinho de compras.
+Realizar exclusão do item adicionado ao carrinho.
+Clicar no link de "Desfazer" para que o item excluído retorne ao carrinho.
+Resultado Esperado: O carrinho deve estar com o item que foi adicionado inicialmente com sucesso.
 
 3. Testes de Checkout
 
-3.1 Finalizar a compra com sucesso
+3.1 Validar campos obrigatórios do checkout
 
-Objetivo: Verificar se o checkout é realizado com sucesso.
-
-Passos:
-Adicionar um item ao carrinho.
-Preencher o formulário de checkout com os dados válidos.
-Confirmar o checkout.
-Resultado Esperado: A mensagem de sucesso "Thank you for your order!" deve ser exibida.
-
-3.2 Erro ao tentar continuar sem preencher o primeiro nome
-
-Objetivo: Verificar se o erro é exibido quando o primeiro nome não é preenchido.
+Objetivo: Verificar se os campos obrigatórios do checkout estão funcionando corretamente.
 
 Passos:
 Adicionar um item ao carrinho.
-Tentar continuar o checkout sem preencher o primeiro nome.
-Resultado Esperado: O erro "Error: First Name is required" deve ser exibido.
+Clicar no botão para Concluir a compra e entrar na página de checkout.
+Clicar no botão para Finalizar a compra sem preencher os campos obrigatórios.
+Resultado Esperado: A compra não é efetuada e cada campo obrigatório dispara uma mensagem confirmando que os mesmos são obrigatórios.
 
-3.3 Erro ao tentar continuar sem preencher o último nome
+3.2 Adicionar um cupom válido.
 
-Objetivo: Verificar se o erro é exibido quando o último nome não é preenchido.
-
-Passos:
-Adicionar um item ao carrinho.
-Tentar continuar o checkout sem preencher o último nome.
-Resultado Esperado: O erro "Error: Last Name is required" deve ser exibido.
-
-3.4 Erro ao tentar continuar sem preencher o CEP
-
-Objetivo: Verificar se o erro é exibido quando o CEP não é preenchido.
+Objetivo: Verificar se um cupom válido é adicionado com sucesso.
 
 Passos:
 Adicionar um item ao carrinho.
-Tentar continuar o checkout sem preencher o CEP.
-Resultado Esperado: O erro "Error: Postal Code is required" deve ser exibido.
+Clicar no botão para Concluir a compra e entrar na página de checkout.
+Adicionar um cupom válido.
+Resultado Esperado: O cupom é adicionado com sucesso e exibida a mensagem "Código de cupom aplicado com sucesso.".
 
-3.5 Cancelar o checkout e voltar para o carrinho
+3.3 Adicionar cupom inválido.
 
-Objetivo: Verificar se o usuário consegue cancelar o checkout e voltar ao carrinho.
+Objetivo: Verificar se ao adicionar um cupom inválido, ocorre o devido erro esperado.
 
 Passos:
 Adicionar um item ao carrinho.
-Iniciar o checkout e cancelar o processo.
-Resultado Esperado: O usuário deve ser redirecionado de volta para a página do carrinho.
+Clicar no botão para Concluir a compra e entrar na página de checkout.
+Adicionar um cupom inválido.
+Resultado Esperado: O cupom não é adicionado e é exibida mensagem "O cupom "inválido_cupom" não existe!".
+
+3.4 Validar mensagens dos formatos de pagamentos.
+
+Objetivo: Verificar se ao selecionar qualquer uma das formas de pagamentos disponíveis, exibe a mensagem correta referente ao tipo de pagamento escolhido.
+
+Passos:
+Adicionar um item ao carrinho.
+Clicar no botão para Concluir a compra e entrar na página de checkout.
+Selecionar uma das formas de pagamento.
+Resultado Esperado 1: Ao selecionar a forma de pagamento "Transferência bancária", a mensagem "Faça seu pagamento diretamente em nossa conta bancária. Se possível informe o ID do seu pedido como identificação do seu depósito ou transferência. Para pagamentos via DOC, seu pedido não será enviado enquanto o pagamento não for compensado." é exibida com sucesso.
+Resultado Esperado 2: Ao selecionar a forma de pagamento "Cheque", a mensagem "Envie seu cheque para Nome da loja, Rua da loja, Cidade da loja, Estado/País da loja, CEP da loja." é exibida com sucesso.
+Resultado Esperado 3: Ao selecionar a forma de pagamento " Pagamento na entrega", a mensagem "Pagar em dinheiro na entrega." é exibida com sucesso.
 
 >> Comando para gerar relatório pós teste: npx cypress run --reporter mochawesome

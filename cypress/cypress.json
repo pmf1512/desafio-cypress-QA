@@ -1,8 +1,8 @@
 {
-    "baseUrl": "https://www.saucedemo.com/v1/",
+    "baseUrl": "http://lojaebac.ebaconline.art.br",
     "env": {
-      "username": "standard_user",
-      "password": "secret_sauce"
+      "username": "pamelamaia_freitas@hotmail.com",
+      "password": "Pl@netaSol@r"
     },
     "viewportWidth": 1200,
     "viewportHeight": 800

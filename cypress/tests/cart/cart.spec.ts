@@ -1,55 +1,68 @@
-import LoginPage from "../../support/pageObjects/LoginPage";
-import CartPage from "../../support/pageObjects/CartPage";
+import { cartElement }  from '../../support/locators/cartElement';
+import { loginElement }  from '../../support/locators/loginElement';
+import { buySizeOptionButton }  from '../../support/locators/cartElement';
+import { buyColorOptionButton }  from '../../support/locators/cartElement';
+import { checkoutElement }  from '../../support/locators/checkoutElement';
 
 describe("Testes do Carrinho", () => {
   beforeEach(() => {
-    LoginPage.visit();
-    // Usando variáveis do .env para login
-    LoginPage.login(Cypress.env("username"), Cypress.env("password"));
+    cy.login();
   });
 
-  it("Deve adicionar um item ao carrinho", () => {
-    // Acessar os itens do carrinho do config.env
-    cy.fixture("checkout").then((data) => {
-      const cartItem = Cypress.env("cart")[0]; // Acessando o primeiro item do carrinho
-      CartPage.addToCart(cartItem); // Adicionando o primeiro produto do fixture
-    });
-    CartPage.goToCart();
-    cy.get(".cart_item").should("have.length", 1);
-    cy.get(".cart_item .inventory_item_name").should("contain.text", "Sauce Labs Backpack");
-  });
+  it("Deve adicionar um item ao carrinho e realizar a compra", () => {
+    cy.get(cartElement.buyMenuButton).should("be.visible").click();
+    cy.get(cartElement.searchInput).should("be.visible").type("Aero Daily Fitness Tee{enter}");
+    cy.get(buySizeOptionButton("L")).should("be.visible").click();
+    cy.get(buyColorOptionButton("Black")).should("be.visible").click();
+    cy.get(cartElement.buyButton).should("be.visible").click();
+    cy.contains("Ver carrinho").should("be.visible").click();
+    cy.get(loginElement.topBar).should("contain", "1");
+    cy.get(loginElement.topBar).should("contain", "R$24,00");
+    cy.contains("Concluir compra").should("be.visible").click();
+    cy.get(checkoutElement.firstNameInput).should("be.visible").clear().type("Pamela");
+    cy.get(checkoutElement.lastNameInput).should("be.visible").clear().type("Maia");
+    cy.get(checkoutElement.countrySelect).should("be.visible").select('BR', { force: true });
+    cy.get(checkoutElement.address1Input).should("be.visible").clear().type("Rua mauro filho, 77");
+    cy.get(checkoutElement.cityInput).should("be.visible").clear().type("Fortaleza");
+    cy.get(checkoutElement.stateSelect).should("be.visible").select('CE', { force: true });
+    cy.get(checkoutElement.postcodeInput).should("be.visible").clear().type("60861-777");
+    cy.get(checkoutElement.phoneInput).should("be.visible").clear().type("5585996274371");
+    cy.get(checkoutElement.emailInput).should("be.visible").clear().type("pamelamaia_freitas@hotmail.com");
+    cy.get(checkoutElement.deliveryRadioButton).should("be.visible").check();
+    cy.get(checkoutElement.termsConditionsCheckbox).should("be.visible").check();
+    cy.get(checkoutElement.finishBuyButton).should("be.visible").click();
+    cy.contains("Obrigado. Seu pedido foi recebido.").should("be.visible");
+});
 
-  it("Deve adicionar dois itens aleatórios ao carrinho", () => {
-    cy.get(".inventory_item") // Pega todos os itens disponíveis na página
-      .then(($items) => {
-        // Seleciona dois itens aleatórios
-        const randomItems = Cypress._.sampleSize($items.toArray(), 2); 
+  it("Deve adicionar um item ao carrinho e excluir", () => {
+    cy.get(cartElement.buyMenuButton).should("be.visible").click();
+    cy.get(cartElement.searchInput).should("be.visible").type("Aero Daily Fitness Tee{enter}");
+    cy.get(buySizeOptionButton("L")).should("be.visible").click();
+    cy.get(buyColorOptionButton("Black")).should("be.visible").click();
+    cy.get(cartElement.buyButton).should("be.visible").click();
+    cy.contains("Ver carrinho").should("be.visible").click();
+    cy.get(loginElement.topBar).should("contain", "1");
+    cy.get(loginElement.topBar).should("contain", "R$24,00");
+    cy.get(cartElement.removeItemCartButton).should("be.visible").click();
+    cy.contains("“Aero Daily Fitness Tee” removido. Desfazer?").should("be.visible");
+    cy.contains("Seu carrinho está vazio.").should("be.visible");
+});
 
-        // Adiciona os itens aleatórios ao carrinho
-        randomItems.forEach(($item) => {
-          // Usando jQuery para encontrar o nome do item
-          const itemName = Cypress.$($item).find(".inventory_item_name").text();
-          CartPage.addToCart(itemName); // Adiciona o item ao carrinho
-        });
-      });
+  it("Deve adicionar um item ao carrinho, excluir e desfazer a exclusão", () => {
+    cy.get(cartElement.buyMenuButton).should("be.visible").click();
+    cy.get(cartElement.searchInput).should("be.visible").type("Aero Daily Fitness Tee{enter}");
+    cy.get(buySizeOptionButton("L")).should("be.visible").click();
+    cy.get(buyColorOptionButton("Black")).should("be.visible").click();
+    cy.get(cartElement.buyButton).should("be.visible").click();
+    cy.contains("Ver carrinho").should("be.visible").click();
+    cy.get(loginElement.topBar).should("contain", "1");
+    cy.get(loginElement.topBar).should("contain", "R$24,00");
+    cy.get(cartElement.removeItemCartButton).should("be.visible").click();
+    cy.contains("Seu carrinho está vazio.").should("be.visible");
+    cy.contains("Desfazer?").should("be.visible").click();
+    cy.contains("Total no carrinho").should("be.visible");
+    cy.contains("Concluir compra").should("be.visible");
 
-    CartPage.goToCart();
-    cy.get(".cart_item").should("have.length", 2); // Verifica se dois itens foram adicionados
-  });
+});
 
-
-  it("Deve adicionar todos os itens ao carrinho", () => {
-    cy.fixture("checkout").then((data) => {
-      const products = Cypress.env("cart"); // Acessando os itens do carrinho
-      products.forEach((product: string) => {
-        CartPage.addToCart(product); // Adicionando todos os itens do fixture
-      });
-    });
-    CartPage.goToCart();
-    cy.get(".cart_item").should("have.length", 6); // A quantidade de itens no carrinho deve ser 6
-    cy.get(".cart_item .inventory_item_name").each(($cartItem, index) => {
-      const productName = $cartItem.text();
-      cy.get(".cart_item").eq(index).find(".inventory_item_name").should("contain.text", productName);
-    });
-  });
 });
