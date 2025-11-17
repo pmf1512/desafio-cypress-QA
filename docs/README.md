@@ -1,4 +1,4 @@
-# Testes Automatizados - SwagLabs
+# Testes Automatizados - Ebac Shop
 
 ## 📌 Tecnologias Utilizadas
 
